@@ -4,6 +4,7 @@ dist: trusty
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install libeigen3-dev ; fi
+  - if [[ "$TRAVIS_BUILD_TYPE" == "Coverage" ]]; then pip install --user pyyaml cpp-coveralls          ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install eigen          ; fi
 
@@ -11,15 +12,16 @@ language: cpp
 
 compiler:
   - gcc
-  - clang
+#  - clang
 
 os:
   - linux
-  - osx
+#  - osx
 
 env:
   - BUILD_TYPE=Release
   - BUILD_TYPE=Debug
+  - BUILD_TYPE=Coverage
 
 
 script:
@@ -29,6 +31,9 @@ script:
   - make -j
   - make test
 
+after_success:
+  - coveralls
+  
 branches:
   only:
     - master

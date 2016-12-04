@@ -175,7 +175,8 @@ class SO2GroupBase {
     Scalar length = std::sqrt(unit_complex().x() * unit_complex().x() +
                               unit_complex().y() * unit_complex().y());
     SOPHUS_ENSURE(length >= SophusConstants<Scalar>::epsilon(),
-                  "Complex number should not be close to zero!");
+                  "Complex number (%) should not be close to zero!",
+                  unit_complex().transpose());
     unit_complex_nonconst().x() /= length;
     unit_complex_nonconst().y() /= length;
   }
@@ -452,7 +453,7 @@ class SO2Group : public SO2GroupBase<SO2Group<_Scalar, _Options> > {
                       static_cast<Scalar>(0.5) * (R(1, 0) - R(0, 1))) {
     SOPHUS_ENSURE(std::abs(R.determinant() - static_cast<Scalar>(1)) <=
                       SophusConstants<Scalar>::epsilon(),
-                  "det(R) should be (close to) 1.");
+                  "det(R) should be (close to) 1, but is %", R.determinant());
   }
 
   /**

@@ -54,6 +54,8 @@
 #define EIGEN_DEVICE_FUNC
 #endif
 
+#define SOPHUS_FUN EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
+
 namespace Sophus {
 namespace details {
 
